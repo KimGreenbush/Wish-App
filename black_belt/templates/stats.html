@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		{% load static %}
+		<link rel="stylesheet" href="{% static 'css/style_stats.css' %}" />
+	</head>
+	<body>
+		<div id="container">
+			<nav>
+				<h1>Hello {{logged_user.first_name}}! These are your stats!</h1>
+				<div>
+					<a href="/wishes">Dashboard</a>
+					<a href="/logout">Logout</a>
+				</div>
+			</nav>
+
+			<h4>Total wishes granted so far for all users: {{wishes|length}}</h4>
+			<p>Your granted wishes: {{granted_wishes|length}}</p>
+			<p>Your pending wishes: {{pending_wishes|length}}</p>
+		</div>
+	</body>
+</html>

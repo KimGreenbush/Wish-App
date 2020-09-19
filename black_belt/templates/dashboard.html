@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		{% load static %}
+		<link rel="stylesheet" href="{% static 'css/style_dashboard.css' %}" />
+	</head>
+	<body>
+		<div id="container">
+			<nav>
+				<h1>Hello {{logged_user.first_name}}!</h1>
+				<div>
+					<a href="/logout">Logout</a>
+					<a href="/wishes/stats"><button class="status">View Stats</button></a>
+					<a href="/wishes/new"><button>Make a wish!</button></a>
+				</div>
+			</nav>
+
+			<div>
+				<p>Your wish list:</p>
+				<table>
+					<thead>
+						<tr>
+							<th>Item</th>
+							<th>Date Added</th>
+							<th>Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for wish in user_wishes %}
+						<tr>
+							<td>{{wish.wish_item}}</td>
+							<td>{{wish.created_at}}</td>
+							<td>
+								<a href="/wishes/delete/{{wish.id}}">Remove</a>| <a href="/wishes/edit/{{wish.id}}">Edit</a>|
+								<a href="/wishes/{{wish.id}}/granted">Granted!</a>
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+
+				<p>Granted wishes:</p>
+
+				<table>
+					<thead>
+						<tr>
+							<th>Item</th>
+							<th>Wisher</th>
+							<th>Date Added</th>
+							<th>Date Granted</th>
+							<th>Likes</th>
+							<th>Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for wish in granted_wishes%}
+						<tr>
+							<td>{{wish.wish_item}}</td>
+							<td>{{wish.uploaded_by.first_name}}</td>
+							{% load tz %}
+							<td>{{wish.created_at|localtime}}</td>
+							<td>{{wish.updated_at|localtime}}</td>
+							<td>{{wish.liked_by.all|length}}</td>
+							<td>{% if not logged_user in wish.liked_by.all and  logged_user != wish.uploaded_by %}<a href="/wishes/{{wish.id}}/like">Like</a>{% endif %}</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+
+
+			</div>
+		</div>
+	</body>
+</html>

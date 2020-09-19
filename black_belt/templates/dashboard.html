@@ -32,7 +32,7 @@
 						{% for wish in user_wishes %}
 						<tr>
 							<td>{{wish.wish_item}}</td>
-							<td>{{wish.created_at}}</td>
+							<td>{{created}}</td>
 							<td>
 								<a href="/wishes/delete/{{wish.id}}">Remove</a>| <a href="/wishes/edit/{{wish.id}}">Edit</a>|
 								<a href="/wishes/{{wish.id}}/granted">Granted!</a>
@@ -61,8 +61,8 @@
 							<td>{{wish.wish_item}}</td>
 							<td>{{wish.uploaded_by.first_name}}</td>
 							{% load tz %}
-							<td>{{wish.created_at|localtime}}</td>
-							<td>{{wish.updated_at|localtime}}</td>
+							<td>{{wish.created_at|date:"M j, Y"}}</td>
+							<td>{{wish.updated_at|date:"M j, Y"}}</td>
 							<td>{{wish.liked_by.all|length}}</td>
 							<td>{% if not logged_user in wish.liked_by.all and  logged_user != wish.uploaded_by %}<a href="/wishes/{{wish.id}}/like">Like</a>{% endif %}</td>
 						</tr>

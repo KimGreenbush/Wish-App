@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from .models import *
 import bcrypt
 from django.contrib import messages
-from time import strftime
+from time import strftime, localtime
 
 #render
 def index(request):
@@ -13,6 +13,7 @@ def dashboard(request):
         return redirect('/')
     context = {
         "logged_user": User.objects.get(id=request.session['uuid']),
+        "created": User.objects.get(id=request.session['uuid']).created_at.strftime("%b %d, %Y"),
         "user_wishes": User.objects.get(id=request.session['uuid']).uploaded_wishes.filter(granted=False),
         "granted_wishes": Wish.objects.filter(granted= True)
     }

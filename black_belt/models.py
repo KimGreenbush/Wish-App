@@ -16,7 +16,7 @@ class UserManager(models.Manager):
             errors['email_password'] = "Email/Password error"
         if len(postData['password']) < 8:
             errors['email_password'] = "Email/Password error"
-            if postData['password'] != postData['confirm-pw']:
+        if postData['password'] != postData['confirm-pw']:
                 errors['email_password'] = "Email/Password error"
         return errors
 
